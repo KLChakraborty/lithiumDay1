@@ -13,21 +13,16 @@ const router = express.Router();
 //     res.send(movies[myParams])
 //  })
 
-// router.get("/movies/:indexNumber", function (req, res) {
-//     let movies = ["Rang de basanti", "The shining", "Lord of the rings", "Batman begins"]
+router.get("/movies/:indexNumber", function (req, res) {
+    let movies = ["Rang de basanti", "The shining", "Lord of the rings", "Batman begins"]
 
-//     let myParams = req.params.indexNumber
+    let myParams = req.params.indexNumber
 
-//     if (myParams <= movies.length) {
-//         res.send(movies[myParams])
-//     }else{
-//     res.send("Invalid")}
-// })
-// router.get('/students', function (req, res){
-//     console.log("The path params in the request are : ", req.params)
-//     let students = ['Sabiha', 'Neha', 'Akash']
-//     res.send(students)
-// })
+    if (myParams > movies.length - 1 || myParams < 0) {
+        res.send("Invalid")
+    }
+    res.send(movies[myParams])
+})
 
 
 
@@ -47,15 +42,6 @@ const router = express.Router();
 //     console.log("The path params in the request are : ", myParams)
 //     res.send('The full name is ' + myParams.studentName )
 // })
-
-// Example 2 for path params
-// router.get('/student-details/:name', function(req, res){
-//     let requestParams = req.params
-//     console.log("This is the request ", requestParams)
-//     let studentName = requestParams.name
-//     console.log('Name of the student is ', studentName)
-//     res.send('Dummy response')
-// })
 // router.get("/films", function (req, res) {
 
 //     const films = [{
@@ -74,26 +60,31 @@ const router = express.Router();
 //     res.send(films)
 // })
 
-router.get("/films/:filmId", function (req, res) {
+// router.get("/films/:filmId", function (req, res) {
 
-    const films = [{
-        "id": 1,
-        "name": "The Shining"
-    }, {
-        "id": 2,
-        "name": "Incendies"
-    }, {
-        "id": 3,
-        "name": "Rang de Basanti"
-    }, {
-        "id": 4,
-        "name": "Finding Nemo"
-    }]
-    const filmId = req.params.filmId
-    if (filmId > films.length) {
-        res.send('No film exists with this id')
-    } else {
-        res.send(films[filmId - 1])
-    }
-})
+//     const films = [{
+//         "id": 1,
+//         "name": "The Shining"
+//     }, {
+//         "id": 2,
+//         "name": "Incendies"
+//     }, {
+//         "id": 3,
+//         "name": "Rang de Basanti"
+//     }, {
+//         "id": 4,
+//         "name": "Finding Nemo"
+//     }]
+//     const filmId = req.params.filmId
+//     for(let i = 0; i < films.length; i++){
+//         let film = films[i]
+//         if(film.id == filmId) {
+//             //if there is a match return the response from here
+//             return res.send(film)
+//         }
+//     }
+
+//     //if there is no match give an error response
+//     res.send("The film id doesn't match any movie")
+// })
 module.exports = router;
