@@ -89,11 +89,11 @@ router.get("/films/:filmId", function (req, res) {
         "id": 4,
         "name": "Finding Nemo"
     }]
-        const filmId = req.params.filmId
-        if (filmId > films.length) {
-            res.send('No film exists with this id')
-        } else {
-            res.send(films[filmId - 1])
-        }
+    const filmId = req.params.filmId
+    if (filmId > films.length) {
+        res.send('No film exists with this id')
+    } else {
+        res.send(films[filmId - 1])
+    }
 })
 module.exports = router;
