@@ -9,8 +9,6 @@ router.get("/test-me", midd1.midd, model.A)
 
 router.post("/test-you", midd1.midd, model.B)
 
-router.post("/test-you", midd1.midd, model.B)
-
 
 
 
