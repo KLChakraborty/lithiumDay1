@@ -1,8 +1,15 @@
 const midd = function (req, res, next) {
     const y = req.ip
-    // const x = moment().format('YYYY MM DD h:mm:ss')
+    const date = new Date()
+const currentDate = date.getDate() + "-"
++ (date.getMonth()+1)  + "-" 
++ date.getFullYear() + "  "  
++ date.getHours() + ":"  
++ date.getMinutes() + ":" 
++ date.getSeconds();
+
     const z = req.path
-console.log(y, z)
+console.log(currentDate, y, z)
 next()
 }
 
