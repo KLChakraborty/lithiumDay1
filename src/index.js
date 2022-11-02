@@ -1,10 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const route = require('./routes/route.js');
+const midd1 = require("./middlewares/userMiddleware")
+
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(midd1.midd)
 
 app.use('/', route);
 
