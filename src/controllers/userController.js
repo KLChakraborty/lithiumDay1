@@ -116,22 +116,56 @@ const password = req.body.password
     if(!savedData){
        return res.send("Enter valid credentials")
     }
-    const token = jwt.sign({userId: savedData._id}, "function lithium cohort")
-    res.setHeader("x-auth-token", token);
-    res.send({msg: token, status: true})
+    const encodeToken = jwt.sign({userId: savedData._id}, "function lithium cohort")
+    res.setHeader("x-auth-token", encodeToken);
+    res.send({msg: encodeToken, status: true})
 }
 
 
 const findUser1 = async function(req, res){
-    const body1 = req.params.id
-    const savedData2 = await userModel.findOne({_id: body1})
+    let userId = req.params.id
+    const savedData2 = await userModel.findById(userId)
     if(!savedData2){
-      return res.send("Enter valid Id")
-    }
-res.send({msg: savedData2})
+      return res.send({msg: "enter valid userId"})
+    }   
+return res.send({msg: savedData2})
 }
+
+
+
+const updateData = async function(req, res){
+
+let userId1 = req.params.id1
+let body = req.body.firstName
+const savedData3 = await userModel.findById(userId1)
+if(!savedData3){
+    return res.send({msg: "enter valid userId"})
+  }
+const savedData4 = await userModel.findOneAndUpdate({_id: savedData3}, {$set: {firstName: body}}, {new: true})
+if(!savedData4.length > 0){
+    return res.send("Please enter the attribute to update")
+}
+return res.send({msg: savedData4})
+}
+
+
+const deleteData = async function(req, res){
+    
+    let userId2 = req.params.id2
+    const savedData4 = await userModel.findById(userId2)
+    if(!savedData4){
+        return res.send({msg: "enter valid userId"})
+      }
+    const savedData5 = await userModel.findOneAndUpdate({_id: savedData4}, {$set: {isDeleted: false}}, {new: true})
+    return res.send({msg: savedData5})
+    }
+
 module.exports.createUser = createUser
 
 module.exports.findUser = findUser
 
 module.exports.findUser1 = findUser1
+
+module.exports.updateData = updateData
+
+module.exports.deleteData = deleteData
