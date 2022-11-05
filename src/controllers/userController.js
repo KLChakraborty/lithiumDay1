@@ -136,15 +136,16 @@ return res.send({msg: savedData2})
 const updateData = async function(req, res){
 
 let userId1 = req.params.id1
-let body = req.body.firstName
+let body = req.body
+if(!Object.keys(body).length > 0){
+  return res.send("Please enter the attribute to update")
+}
 const savedData3 = await userModel.findById(userId1)
 if(!savedData3){
     return res.send({msg: "enter valid userId"})
   }
-const savedData4 = await userModel.findOneAndUpdate({_id: savedData3}, {$set: {firstName: body}}, {new: true})
-if(!savedData4.length > 0){
-    return res.send("Please enter the attribute to update")
-}
+const savedData4 = await userModel.findOneAndUpdate({_id: savedData3}, {$set: {firstName: body.firstName}}, {new: true})
+
 return res.send({msg: savedData4})
 }
 
