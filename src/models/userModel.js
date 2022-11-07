@@ -1,21 +1,48 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose")
 
-const userSchema = new mongoose.Schema( {
-    firstName: String,
-    lastName: String,
-    mobile: {
+const userDocSchema = new mongoose.Schema({
+
+    firstName: {
         type: String,
-
         required: true
     },
-    emailId: String,
-    password: String,
+    lastName: {
+        type: String,
+        required: true
+    },
+    mobile: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    emailId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+    },
     gender: {
         type: String,
-        enum: ["male", "female", "other"]
+        required: true,
     },
-    age: Number,
-    posts: {type: [], deafult: []}
-}, { timestamps: true });
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
+    age: {
+        type: Number,
+        required: true
+    },
+    posts: {
+        type: [],
+        default: []
+    }
+    
+    }, {timestamps: true})
 
-module.exports = mongoose.model('User', userSchema)
+    module.exports = mongoose.model("fbProfile", userDocSchema)
+
+
