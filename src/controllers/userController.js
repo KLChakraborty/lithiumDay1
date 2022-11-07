@@ -100,6 +100,8 @@
 
 const userModel = require("../models/userModel")
 const jwt = require("jsonwebtoken")
+const mongoose = require("mongoose")
+const objectId = mongoose.isValidObjectId
 
 const createUser = async function(req, res){
 
@@ -116,7 +118,7 @@ const password = req.body.password
     if(!savedData){
        return res.send("Enter valid credentials")
     }
-    const encodeToken = jwt.sign({uesrId: savedData._id}, "function lithium cohort")
+    const encodeToken = jwt.sign({userId: savedData._id}, "function lithium cohort")
     res.setHeader("x-auth-token", encodeToken);
     res.send({msg: encodeToken, status: true})
 }
@@ -124,10 +126,11 @@ const password = req.body.password
 
 const findUser1 = async function(req, res){
     let userId = req.params.id
+    if(!objectId(userId)){
+      return res.send("Enter valid user Id")
+    }
     const savedData2 = await userModel.findById(userId)
-    if(!savedData2){
-      return res.send({msg: "enter valid userId"})
-    }   
+      
 return res.send({msg: savedData2})
 }
 
@@ -136,10 +139,12 @@ return res.send({msg: savedData2})
 const updateData = async function(req, res){
 
 let userId1 = req.params.id1
+
+if(!objectId(userId1)){
+  return res.send("Enter valid user Id")
+}
+
 const savedData3 = await userModel.findById(userId1)
-if(!savedData3){
-    return res.send({msg: "enter valid userId"})
-  }
 
   let body = req.body
 if(!Object.keys(body).length > 0){ 
@@ -154,10 +159,12 @@ return res.send({msg: savedData4})
 const deleteData = async function(req, res){
     
     let userId2 = req.params.id2
+    if(!objectId(userId2)){
+      return res.send("Enter valid user Id")
+    }
+
     const savedData4 = await userModel.findById(userId2)
-    if(!savedData4){
-        return res.send({msg: "enter valid userId"})
-      }
+
     const savedData5 = await userModel.findOneAndUpdate({_id: savedData4}, {$set: {isDeleted: true}}, {new: true})
     return res.send({msg: savedData5})
     }
