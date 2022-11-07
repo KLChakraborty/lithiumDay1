@@ -16,7 +16,7 @@ const authenticate = function (req, res, next) {
 
 
 const authorise = function (req, res, next) {
-    const decodeToken = req.decodeToken
+    const decodeToken = req.decodeToken 
     let userToBeModified = req.params.id
     let userLoggedIn = decodeToken.user
     if (userToBeModified != userLoggedIn) {

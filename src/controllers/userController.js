@@ -46,7 +46,7 @@ if(!Object.keys(req.body).length > 0){
 }
 const {lastName} = req.body
 if(!lastName){
-  return res.send({msg: "Please enter this attribute to update", status: false})
+  return res.send({msg: "Please enter lastName attribute to update", status: false})
 }
 const savedData4 = await userModel.findOneAndUpdate({_id: userToBeModified}, {$set: {lastName}}, {new: true})
 return res.send({msg: savedData4, status: true})
@@ -69,7 +69,6 @@ return res.send({msg: savedData6, status: true})
 const deleteUser = async function(req, res){
 
   const userToBeModified = req.userToBeModified
-  console.log(userToBeModified)
   const savedData7 = await userModel.findById(userToBeModified)
 
   const savedData8 = await userModel.findOneAndUpdate({_id: userToBeModified}, {$set: {isDeleted: true}}, {new: true})
