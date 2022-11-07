@@ -116,7 +116,7 @@ const password = req.body.password
     if(!savedData){
        return res.send("Enter valid credentials")
     }
-    const encodeToken = jwt.sign({userId: savedData._id}, "function lithium cohort")
+    const encodeToken = jwt.sign({uesrId: savedData._id}, "function lithium cohort")
     res.setHeader("x-auth-token", encodeToken);
     res.send({msg: encodeToken, status: true})
 }
@@ -142,7 +142,7 @@ if(!savedData3){
   }
 
   let body = req.body
-if(!Object.keys(body).length > 0){
+if(!Object.keys(body).length > 0){ 
   return res.send("Please enter the attribute to update")
 }
 const savedData4 = await userModel.findOneAndUpdate({_id: savedData3}, {$set: {firstName: body.firstName}}, {new: true})
@@ -158,7 +158,7 @@ const deleteData = async function(req, res){
     if(!savedData4){
         return res.send({msg: "enter valid userId"})
       }
-    const savedData5 = await userModel.findOneAndUpdate({_id: savedData4}, {$set: {isDeleted: false}}, {new: true})
+    const savedData5 = await userModel.findOneAndUpdate({_id: savedData4}, {$set: {isDeleted: true}}, {new: true})
     return res.send({msg: savedData5})
     }
 

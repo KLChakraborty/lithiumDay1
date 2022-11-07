@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 
 
-const midd = async function(req, res, next){
+const midd = function(req, res, next){
 
     const token = req.headers["x-auth-token"]
     if(!token){
