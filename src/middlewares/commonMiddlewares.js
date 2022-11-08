@@ -1,26 +1,48 @@
+const jwt = require("jsonwebtoken")
+const mongoose = require("mongoose")
+const objectId = mongoose.isValidObjectId
 
-const mid1= function ( req, res, next) {
-    req.falana= "hi there. i am adding something new to the req object"
-    console.log("Hi I am a middleware named Mid1")
+
+const authenticate = function(req, res, next){
+    try {
+        const token = req.headers["x-auth-token"]
+    if(!token){
+        return res.status(404).send({msg: "Token is not present", status: false})
+    }
+    const decodedToken = jwt.verify(token, "hey there")
+    if(!decodedToken){
+        return res.status(401).send({msg: "Invalid token", status: false})
+    }
+    const userToBeModified = req.params.id
+        if(!userToBeModified){
+            return res.status(400).send({msg: "Enter UserId", status: true})
+        }
+        if(!objectId(userToBeModified)){
+           return res.status(400).send({msg: "Invalid UserId"})
+        }
+
+        req.decodedToken = decodedToken
+        req.userToBeModified = userToBeModified
+        next()
+    } catch(error){
+       return res.status(500).send({message: error.message, status: false})
+    }
+    }
+
+
+    const authorise = function(req, res, next){
+try {
+    const decodedToken = req.decodedToken
+const userToBeModified = req.userToBeModified
+        const userLoggedIn = decodedToken.userId
+    if (userToBeModified != userLoggedIn.toString()) {
+        return res.status(401).send({ msg: "User logged is not allowed to modify the requested users data", status: false })
+    }
+    req.userToBeModified = userToBeModified
     next()
+}catch(error){
+    res.status(500).send({message: error.message, status: false})
 }
+    }
 
-const mid2= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid2")
-    next()
-}
-
-const mid3= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid3")
-    next()
-}
-
-const mid4= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid4")
-    next()
-}
-
-module.exports.mid1= mid1
-module.exports.mid2= mid2
-module.exports.mid3= mid3
-module.exports.mid4= mid4
+    module.exports = { authenticate, authorise }
