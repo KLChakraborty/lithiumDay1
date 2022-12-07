@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const aws= require("aws-sdk")
 
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
-})
 // s3 and cloud stodare
 //  step1: multer will be used to get access to the file in nodejs( from previous session learnings)
 //  step2:[BEST PRACTISE]:- always write s2 upload function separately- in a separate file/function..exptect it to take file as input and return the uploaded file as output
@@ -18,8 +15,8 @@ router.get("/test-me", function (req, res) {
 // -how to write promise:- wrap your entire code inside: "return new Promise( function(resolve, reject) { "...and when error - return reject( err )..else when all ok and you have data, return resolve (data)
 
 aws.config.update({
-    accessKeyId: "AKIAY3L35MCRVFM24Q7U",
-    secretAccessKeyId: "qGG1HE0qRixcW1T1Wg1bv+08tQrIkFVyDFqSft4J",
+    accessKeyId: "AKIAY3L35MCRZNIRGT6N",
+    secretAccessKey: "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",
     region: "ap-south-1"
 })
 
